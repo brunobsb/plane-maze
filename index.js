@@ -3,14 +3,22 @@
 let myObstacles = [];
 let myTherm = [];
 let fuel = 100;
-
+let backgroundImage = new Image();
+let redBaron = new Image();
+redBaron.src = "./Type_4/Biploar_type4_1.png";
+let enemy = new Image();
+enemy.src = "./Type_3/type_3.png";
+let tanker = new Image();
+tanker.src = "./Type-2/colored_2.png";
+let final = new Image();
+final.src = "./gameover.png";
 let myGameArea = {
 
   canvas: document.createElement("canvas"),
   frames: 0,
   start: function () {
-    this.canvas.width = 600;
-    this.canvas.height = 480;
+    this.canvas.width =530;
+    this.canvas.height =650;
     this.context = this.canvas.getContext("2d");
     document.body.insertBefore(this.canvas, document.body.childNodes[0]);
     // call updateGameArea() every 20 milliseconds
@@ -27,10 +35,14 @@ let myGameArea = {
     this.context.font = "18px serif";
     this.context.fillStyle = "black";
     this.context.fillText("Flight time: " + fuel, 350, 50);
-
-  }, // final desta parte da contagem de pontos
+  },
+   // final desta parte da contagem de pontos
 
 };
+
+
+
+
 
 
 
@@ -50,10 +62,14 @@ class Component {
     this.speedY = 0;
   }
 
-  update() {
+  update(image) {
     let ctx = myGameArea.context; // Armazenando o context 2d do canvas em ctx???
-    ctx.fillStyle = this.color; // Colocando a cor armazenada no constructor no fillStyle? fillStyle???
-    ctx.fillRect(this.x, this.y, this.width, this.height); // Usando as variáveis do contructor para criar o retangulo com os valores do canvas.
+    
+      ctx.drawImage(image, this.x, this.y, this.width, this.height );
+   
+
+   // ctx.fillStyle = this.color; // Colocando a cor armazenada no constructor no fillStyle? fillStyle???
+    //ctx.fillRect(this.x, this.y, this.width, this.height); // Usando as variáveis do contructor para criar o retangulo com os valores do canvas.
     
   }
 
@@ -101,7 +117,7 @@ class Component {
 //  Criando o elemento player chamando - 03
 // na classe componente e guardando na variável.     
 
-let player = new Component(30, 30, "red", 200, 200);
+let player = new Component(30, 30, "red", 265, 620);
 //let gameOver = new Component(600, 480, "magenta", 600, 480);
 
 document.onkeydown = function (e) {
@@ -118,7 +134,7 @@ document.onkeydown = function (e) {
       if (player.y + 30 < myGameArea.canvas.height) {
         player.speedY += 1;
       } else {
-        player.y = 450;
+        player.y = 620;
         player.speedY = 0;
       }
       break;
@@ -131,10 +147,10 @@ document.onkeydown = function (e) {
       }
       break;
     case 39: // right arrow
-      if (player.x + 30 < 600) {
+      if (player.x + 30 < myGameArea.canvas.width) {
         player.speedX += 1;
       } else {
-        player.x = 570;
+        player.x = 500;
         player.speedX = 0;
       }
 
@@ -147,12 +163,25 @@ document.onkeyup = function (e) {
   player.speedY = 0;
 };
 
+function gameover(){
+let ctx = myGameArea.context;
+final.src = "./gameover.png";
+ctx.drawImage(final, 100, 100, 300 , 300);
+}
+
+function fundo(){
+  let ctx = myGameArea.context;
+  backgroundImage.src = "./background.png";
+  ctx.drawImage(backgroundImage, 0, 0);  
+}
+
 function updateGameArea() {
   myGameArea.clear();
+  fundo();
   // update the player's position before drawing
   player.newPos();
-  player.update();
-
+  player.update(redBaron);
+  
   
   // update the obstacles array
   updateObstacles();
@@ -164,23 +193,22 @@ function updateGameArea() {
 }
 
 function updateObstacles() {
-  for (i = 0; i < myObstacles.length; i++) {
-    myObstacles[i].x += -1;
-    myObstacles[i].update();
+  for (i = 0; i < myObstacles.length; i += 1) {
+    myObstacles[i].y += 1;
+    myObstacles[i].update(enemy);
   }
   for (t = 1; t < myTherm.length; t += 2) {
-    myTherm[t].x += -1;
-    myTherm[t].update();
+    myTherm[t].y += 1;
+    myTherm[t].update(tanker);
   }
   myGameArea.frames += 4;
   if (myGameArea.frames % 120 === 0) {
-    let y = myGameArea.canvas.width;
     let minWidth = 20;
     let maxWidth = 500;
     let random = Math.floor(Math.random() * (maxWidth - minWidth + 1) + minWidth)
-    let width = 40;
-    myObstacles.push(new Component(10, width, "green", y, random));
-    setTimeout(function(){ myTherm.push(new Component(20, width, "blue", y, random));}, 3000)
+    let width = 30;
+    myObstacles.push(new Component(width, 20, "green", random, 0));
+    setTimeout(function(){ myTherm.push(new Component(width, 30, "blue", random, 0));}, 3000)
     
   }
 }
@@ -209,11 +237,11 @@ function checkGameOver() { // Inicio de parte dos settings de colisão
   if (passWith) {
     fuel += 5;
   } else if (fuel <= 0) {
-    
+    gameover();
     myGameArea.stop();
     
   } else if (crashed) {
-
+    gameover();
     myGameArea.stop();
  
   }
