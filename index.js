@@ -252,7 +252,7 @@ document.getElementsByName(this.fuel).innerHTML = fuel;
 }
 setInterval('fuelUse()', 1200);
 
-function checkGameOver() { 
+function checkGameOver() {
 
   let crashed = myObstacles.some(function (obstacle) {
     return player.crashWith(obstacle);

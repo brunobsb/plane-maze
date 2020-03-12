@@ -15,4 +15,4 @@ But there is some hope, our allies sent some bombers with spare fuel.
 
 Try to stay alive and have fun!
 
-Game link : https://brunobsb.github.io/plane-maze/
+Game link: https://brunobsb.github.io/plane-maze/
