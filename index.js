@@ -19,7 +19,7 @@ let myGameArea = {
   frames: 0,
   start: function () {
     this.canvas.width = 530;
-    this.canvas.height = 610;
+    this.canvas.height = 605;
     this.context = this.canvas.getContext("2d");
     document.body.insertBefore(this.canvas, document.body.childNodes[0]);
     // call updateGameArea() every 20 milliseconds
@@ -36,15 +36,15 @@ let myGameArea = {
     if(fuel <= 50){
       this.context.fillStyle = "red";
       this.context.font = "22px serif";
-      this.context.fillText("Fuel: " + fuel, 50, 50); 
+      this.context.fillText("Fuel Gauge: " + fuel, 50, 50); 
       this.context.font = "18px serif";
-      this.context.fillStyle = "black";
-      this.context.fillText("Time Elapsed: " + fuel, 350, 50); 
+      // this.context.fillStyle = "black";
+      // this.context.fillText("Time Elapsed: " + fuel, 350, 50);  // For version 1.2
     } else {
     this.context.font = "18px serif";
     this.context.fillStyle = "black";
-    this.context.fillText("Fuel: " + fuel, 50, 50); 
-    this.context.fillText("Time Elapsed: " + fuel, 350, 50);
+    this.context.fillText("Fuel Gauge: " + fuel, 50, 50); 
+    // this.context.fillText("Time Elapsed: " + fuel, 350, 50);
     }
     // timeElapsed: function () { // inicio do sistema de contagem de pontos
     //   this.timer = Math.floor(this.timer);
@@ -134,7 +134,7 @@ class Component {
 //  Criando o elemento player chamando - 03
 // na classe componente e guardando na variável.     
 
-let player = new Component(35, 35, "red", 240, 565);
+let player = new Component(35, 35, "red", 240, 550);
 //let gameOver = new Component(600, 480, "magenta", 600, 480);
 
 document.onkeydown = function (e) {
@@ -151,7 +151,7 @@ document.onkeydown = function (e) {
       if (player.y + 30 < myGameArea.canvas.height) {
         player.speedY += 1.5;
       } else {
-        player.y = 575;
+        player.y = 570;
         player.speedY = 0;
       }
       break;
@@ -179,6 +179,15 @@ document.onkeyup = function (e) {
   player.speedX = 0;
   player.speedY = 0;
 };
+
+// funtion timer(){
+//   let chrono = new Date();
+//   let chronoStorage = chrono.getHours() + ":" + chrono.getMinutes() + ":" + chrono.getSeconds();
+//   document.getElementById("timer").innerHTML = chronoStorage;
+//   timer();
+//   console.log(timer(chronoStorage));
+//   console.log(chronoStorage);
+// }
 
 function gameover(){
 let ctx = myGameArea.context;
@@ -243,7 +252,7 @@ document.getElementsByName(this.fuel).innerHTML = fuel;
 }
 setInterval('fuelUse()', 1200);
 
-function checkGameOver() { // Inicio de parte dos settings de colisão
+function checkGameOver() { 
 
   let crashed = myObstacles.some(function (obstacle) {
     return player.crashWith(obstacle);
@@ -264,6 +273,18 @@ function checkGameOver() { // Inicio de parte dos settings de colisão
  
   }
   
-} // Fim de parte dos settings de colisão
+}
+ let startTimes = false; 
 
-myGameArea.start();
+const btnStart = () => {
+  if(startTimes == false){
+    startTimes = true;
+    myGameArea.start();
+  }
+  
+
+
+}
+
+
+
