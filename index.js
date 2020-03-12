@@ -2,7 +2,8 @@
 
 let myObstacles = [];
 let myTherm = [];
-let fuel = 100;
+let fuel = 120;
+let timer = 0;
 let backgroundImage = new Image();
 let redBaron = new Image();
 redBaron.src = "./Type_4/Biploar_type4_1.png";
@@ -17,8 +18,8 @@ let myGameArea = {
   canvas: document.createElement("canvas"),
   frames: 0,
   start: function () {
-    this.canvas.width =530;
-    this.canvas.height =650;
+    this.canvas.width = 530;
+    this.canvas.height = 610;
     this.context = this.canvas.getContext("2d");
     document.body.insertBefore(this.canvas, document.body.childNodes[0]);
     // call updateGameArea() every 20 milliseconds
@@ -32,9 +33,25 @@ let myGameArea = {
   },
   score: function () { // inicio do sistema de contagem de pontos
     this.fuel = Math.floor(this.fuel / 2);
+    if(fuel <= 50){
+      this.context.fillStyle = "red";
+      this.context.font = "22px serif";
+      this.context.fillText("Fuel: " + fuel, 50, 50); 
+      this.context.font = "18px serif";
+      this.context.fillStyle = "black";
+      this.context.fillText("Time Elapsed: " + fuel, 350, 50); 
+    } else {
     this.context.font = "18px serif";
     this.context.fillStyle = "black";
-    this.context.fillText("Flight time: " + fuel, 350, 50);
+    this.context.fillText("Fuel: " + fuel, 50, 50); 
+    this.context.fillText("Time Elapsed: " + fuel, 350, 50);
+    }
+    // timeElapsed: function () { // inicio do sistema de contagem de pontos
+    //   this.timer = Math.floor(this.timer);
+    //   this.context.font = "18px serif";
+    //   this.context.fillStyle = "black";
+    //   this.context.fillText("Time Elapsed: " + fuel, 350, 50);
+    //   }
   },
    // final desta parte da contagem de pontos
 
@@ -117,14 +134,14 @@ class Component {
 //  Criando o elemento player chamando - 03
 // na classe componente e guardando na variável.     
 
-let player = new Component(30, 30, "red", 265, 620);
+let player = new Component(35, 35, "red", 240, 565);
 //let gameOver = new Component(600, 480, "magenta", 600, 480);
 
 document.onkeydown = function (e) {
   switch (e.keyCode) {
     case 38: // up arrow
       if (player.y > 0) {
-        player.speedY -= 1;
+        player.speedY -= 1.5;
       } else {
         player.y = 0;
         player.speedY = 0;
@@ -132,15 +149,15 @@ document.onkeydown = function (e) {
       break;
     case 40: // down arrow
       if (player.y + 30 < myGameArea.canvas.height) {
-        player.speedY += 1;
+        player.speedY += 1.5;
       } else {
-        player.y = 620;
+        player.y = 575;
         player.speedY = 0;
       }
       break;
     case 37: // left arrow
       if (player.x > 0) {
-        player.speedX -= 1;
+        player.speedX -= 1.5;
       } else {
         player.x = 0;
         player.speedX = 0;
@@ -148,9 +165,9 @@ document.onkeydown = function (e) {
       break;
     case 39: // right arrow
       if (player.x + 30 < myGameArea.canvas.width) {
-        player.speedX += 1;
+        player.speedX += 1.5;
       } else {
-        player.x = 500;
+        player.x = 495;
         player.speedX = 0;
       }
 
@@ -166,7 +183,7 @@ document.onkeyup = function (e) {
 function gameover(){
 let ctx = myGameArea.context;
 final.src = "./gameover.png";
-ctx.drawImage(final, 100, 100, 300 , 300);
+ctx.drawImage(final, 100, 100, 330, 300);
 }
 
 function fundo(){
@@ -206,9 +223,9 @@ function updateObstacles() {
     let minWidth = 20;
     let maxWidth = 500;
     let random = Math.floor(Math.random() * (maxWidth - minWidth + 1) + minWidth)
-    let width = 30;
-    myObstacles.push(new Component(width, 20, "green", random, 0));
-    setTimeout(function(){ myTherm.push(new Component(width, 30, "blue", random, 0));}, 3000)
+    let width = 35;
+    myObstacles.push(new Component(width, 25, "green", random, 0));
+    setTimeout(function(){ myTherm.push(new Component(width, 35, "blue", random, 0));}, 3000)
     
   }
 }
@@ -235,8 +252,9 @@ function checkGameOver() { // Inicio de parte dos settings de colisão
     return player.passWith(therm);
   });
   if (passWith) {
-    fuel += 5;
+    fuel += 2;
   } else if (fuel <= 0) {
+    fuel = 0;
     gameover();
     myGameArea.stop();
     
