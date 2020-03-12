@@ -8,7 +8,7 @@ where done with HTML and CSS.
 ### How to play & Objectives
 In this game you will play as an airplane pilot trying to survive ominous waves of enemy airplanes.
 The problem is, its war time! Our supply lines where cut short, you are low on fuel and no ammunition for your guns.
-But there is some hope, our alies sent some bombers with spare fuel. 
+But there is some hope, our allies sent some bombers with spare fuel. 
 
 * You have to get close to the bombers to refuel.
 * Use the direcionals from your keyboard to control the plane.
