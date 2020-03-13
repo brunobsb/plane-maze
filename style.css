@@ -12,8 +12,8 @@ body{
 
 
 .btn{
-    width: 200px;
-    height: 200px;
+    width: 100px;
+    height: 50px;
     margin: initial;
     display: block;
     margin: auto;
@@ -28,7 +28,23 @@ body{
 	justify-content: center;
 	align-items: center;
     align-content: center;
-    padding: 200px;
     margin-top: 1px;
     background-image:"./backgroundPlane.png";
+    
+}
+
+#capsulaBtnEnch{
+
+
+
+}
+#divEncherto{
+
+
+
+}
+#divBtn{
+
+
+    
 }

@@ -13,9 +13,13 @@ let tanker = new Image();
 tanker.src = "./Type-2/colored_2.png";
 let final = new Image();
 final.src = "./gameover.png";
-let myGameArea = {
+let childNodes = document.getElementById('canvasDiv');
+let test = document.getElementById('test');
 
+
+let myGameArea = {
   canvas: document.createElement("canvas"),
+  
   frames: 0,
   start: function () {
     this.canvas.width = 530;
@@ -23,7 +27,7 @@ let myGameArea = {
     this.context = this.canvas.getContext("2d");
     document.body.insertBefore(this.canvas, document.body.childNodes[0]);
     // call updateGameArea() every 20 milliseconds
-    this.interval = setInterval(updateGameArea, 20);
+    this.interval = setInterval(updateGameArea, 20);// A cada 20 milisegundos a função updateGameArena dispara.
   },
   clear: function () {
     this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
@@ -31,6 +35,9 @@ let myGameArea = {
   stop: function () { // Parte dos settings de colisão
     clearInterval(this.interval);
   },
+
+
+
   score: function () { // inicio do sistema de contagem de pontos
     this.fuel = Math.floor(this.fuel / 2);
     if(fuel <= 50){
@@ -141,7 +148,7 @@ document.onkeydown = function (e) {
   switch (e.keyCode) {
     case 38: // up arrow
       if (player.y > 0) {
-        player.speedY -= 1.5;
+        player.speedY -= 2;
       } else {
         player.y = 0;
         player.speedY = 0;
@@ -149,7 +156,7 @@ document.onkeydown = function (e) {
       break;
     case 40: // down arrow
       if (player.y + 30 < myGameArea.canvas.height) {
-        player.speedY += 1.5;
+        player.speedY += 2;
       } else {
         player.y = 570;
         player.speedY = 0;
@@ -157,7 +164,7 @@ document.onkeydown = function (e) {
       break;
     case 37: // left arrow
       if (player.x > 0) {
-        player.speedX -= 1.5;
+        player.speedX -= 2;
       } else {
         player.x = 0;
         player.speedX = 0;
@@ -165,7 +172,7 @@ document.onkeydown = function (e) {
       break;
     case 39: // right arrow
       if (player.x + 30 < myGameArea.canvas.width) {
-        player.speedX += 1.5;
+        player.speedX += 2;
       } else {
         player.x = 495;
         player.speedX = 0;
@@ -201,22 +208,21 @@ function fundo(){
   ctx.drawImage(backgroundImage, 0, 0);  
 }
 
-function updateGameArea() {
-  myGameArea.clear();
-  fundo();
+function updateGameArea() { // cria os objetos animados pelo canvas de acordo com o set interval.
+  myGameArea.clear(); // limpa
+  fundo(); //bota o pano de fundo
   // update the player's position before drawing
-  player.newPos();
-  player.update(redBaron);
-  
-  
+  player.newPos(); //seta a nova posição do jogador
+  player.update(redBaron); // chama o barao
   // update the obstacles array
-  updateObstacles();
-
+  updateObstacles(); //chama os inimigos
   // check if the game should stop
-  checkGameOver(); // Final dos settings de colisão
+  checkGameOver(); // Final dos settings de colisão // chama os testes de colisão
   // update and draw the score
-  myGameArea.score(); // Final do sistema de contagem de pontos
+  myGameArea.score(); // Final do sistema de contagem de pontos chama o fuel gauge
+
 }
+
 
 function updateObstacles() {
   for (i = 0; i < myObstacles.length; i += 1) {
@@ -227,14 +233,14 @@ function updateObstacles() {
     myTherm[t].y += 1;
     myTherm[t].update(tanker);
   }
-  myGameArea.frames += 4;
+  myGameArea.frames += 3;
   if (myGameArea.frames % 120 === 0) {
     let minWidth = 20;
     let maxWidth = 500;
     let random = Math.floor(Math.random() * (maxWidth - minWidth + 1) + minWidth)
     let width = 35;
     myObstacles.push(new Component(width, 25, "green", random, 0));
-    setTimeout(function(){ myTherm.push(new Component(width, 35, "blue", random, 0));}, 3000)
+    setTimeout(function(){ myTherm.push(new Component(width, 35, "blue", random, 0));}, 2000)
     
   }
 }
@@ -274,17 +280,27 @@ function checkGameOver() {
   }
   
 }
- let startTimes = false; 
 
-const btnStart = () => {
-  if(startTimes == false){
-    startTimes = true;
+window.onload = () => {
+  document.getElementById('stBt').onclick = () => {
+
     myGameArea.start();
+    
+
   }
-  
+  document.getElementById('stopBt').onclick = () => {
 
+    myGameArea.stop();
+    myGameArea.clear();
+    
 
-}
-
+  }
+// let startTimes = false; 
+// const btnStart = () => {
+//   if(startTimes == false){
+//     startTimes = true;
+};
+// }
+// }
 
 
