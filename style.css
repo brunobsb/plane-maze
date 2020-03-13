@@ -1,12 +1,11 @@
 body{
 
-    display: flex;
+	display: flex;
 	flex-direction: row;
 	flex-wrap: nowrap;
-	justify-content: center;
-	align-items: center;
-    align-content: center;
-    background-image:"./backgroundPlane.png";
+	justify-content: space-around;
+	align-items: stretch;
+	align-content: space-around;
 }
 
 
@@ -21,7 +20,7 @@ body{
     /* width: 50%; */
     
 }
-.center{
+/* .center{
 	display: flex;
 	flex-direction: row;
 	flex-wrap: nowrap;
@@ -30,21 +29,28 @@ body{
     align-content: center;
     margin-top: 1px;
     background-image:"./backgroundPlane.png";
-    
-}
+    background-color: lightgreen;
+} */
 
 #capsulaBtnEnch{
 
-
-
+margin: auto;
+background-color: khaki;
 }
 #divEncherto{
 
-
-
+margin: auto;
+background-color: lavender;
 }
 #divBtn{
+background-color: lightcoral;
+    display: flex;
+	flex-direction: column;
+	flex-wrap: nowrap;
+	justify-content: center;
+	align-items: center;
+    align-content: center;
+    width: auto;
+    height: auto;
 
-
-    
 }

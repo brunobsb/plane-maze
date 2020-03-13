@@ -19,7 +19,6 @@ let test = document.getElementById('test');
 
 let myGameArea = {
   canvas: document.createElement("canvas"),
-  
   frames: 0,
   start: function () {
     this.canvas.width = 530;
@@ -288,13 +287,14 @@ window.onload = () => {
     
 
   }
-  document.getElementById('stopBt').onclick = () => {
 
-    myGameArea.stop();
-    myGameArea.clear();
+  document.getElementById('restart').onclick = () => {
     
+    location.reload();
+    myGameArea.start(start);
 
   }
+  
 // let startTimes = false; 
 // const btnStart = () => {
 //   if(startTimes == false){
